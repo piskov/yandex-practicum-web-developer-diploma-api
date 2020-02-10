@@ -57,7 +57,6 @@ articleSchema.options.toJSON = {
   transform(article) {
     const doc = article.toJSON({ transform: false });
 
-    delete doc._id;
     delete doc.__v;
     delete doc.owner;
 
