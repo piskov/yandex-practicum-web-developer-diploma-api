@@ -3,8 +3,8 @@ const { ObjectId } = require('mongoose').Types;
 const Article = require('../models/article');
 
 const BadRequestError = require('../errors/badRequestError');
+const ForbiddenError = require('../errors/forbiddenError');
 const NotFoundError = require('../errors/notFoundError');
-const UnauthorizedError = require('../errors/unauthorizedError');
 
 const messageConstants = require('../constants/messageConstants');
 
@@ -64,7 +64,7 @@ module.exports.deleteArticle = (request, response, next) => {
       }
 
       if (!article.owner.equals(request.user._id)) {
-        throw new UnauthorizedError(messageConstants.ARTICLES_DELETE_ARTICLE_IS_NOT_YOURS);
+        throw new ForbiddenError(messageConstants.ARTICLES_DELETE_ARTICLE_IS_NOT_YOURS);
       }
     })
     .then(() => {

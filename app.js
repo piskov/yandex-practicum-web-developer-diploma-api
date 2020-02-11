@@ -3,16 +3,13 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const { celebrate, errors, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 
-const NotFoundError = require('./errors/notFoundError');
-
-const auth = require('./middlewares/auth');
+const genericErrorHandler = require('./middlewares/genericErrorHandler');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
+const route404Handler = require('./middlewares/route404Handler');
 
-const { createUser, login } = require('./controllers/users');
-const messageConstants = require('./constants/messageConstants');
 const routes = require('./routes');
 const { getMongoAddress } = require('./tools/getMongoAddress');
 
@@ -35,52 +32,16 @@ app.use(rateLimiter);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(cookieParser());
+
 app.use(requestLogger);
 
-app.post('/signin',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().min(3).max(254),
-      password: Joi.string().required().min(8).max(2048),
-    }),
-  }),
-  login);
-
-app.post('/signup',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().min(3).max(254),
-      password: Joi.string().required().min(8).max(2048),
-      name: Joi.string().required().min(2).max(30),
-    }),
-  }),
-  createUser);
-
-app.use(auth);
 app.use('/', routes);
-
-// 404
-app.use((request, response, next) => {
-  next(new NotFoundError(messageConstants.ROUTE_NOT_FOUND));
-});
+app.use(route404Handler);
 
 app.use(errorLogger);
+app.use(errors()); // celebrate errors
 
-// celebrate errors
-app.use(errors());
-
-// any other errors
-app.use((error, request, response, next) => {
-  const { statusCode = 500 } = error;
-  let { message } = error;
-
-  if (statusCode === 500) {
-    message = messageConstants.GENERIC_SERVER_ERROR;
-  }
-
-  response.status(statusCode).send({ message });
-});
+app.use(genericErrorHandler);
 
 app.listen(PORT, () => { });

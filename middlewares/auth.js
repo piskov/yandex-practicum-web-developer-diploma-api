@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+
 const UnauthorizedError = require('../errors/unauthorizedError');
 
 const messageConstants = require('../constants/messageConstants');

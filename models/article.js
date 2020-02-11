@@ -60,8 +60,6 @@ articleSchema.options.toJSON = {
     delete doc.__v;
     delete doc.owner;
 
-    doc.date = doc.date.getTime();
-
     return doc;
   },
 };
