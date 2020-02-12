@@ -1,0 +1,43 @@
+{
+  "name": "yandex-praktikum-web-diploma-api",
+  "version": "0.1.0",
+  "description": "API for Diploma work at Yandex Web developer course",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env node app.js",
+    "dev": "cross-env NODE_ENV=development nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://piskov@github.com/piskov/yandex-web-developer-diploma-api.git"
+  },
+  "author": "Andrey Piskov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piskov/yandex-web-developer-diploma-api/issues"
+  },
+  "homepage": "https://github.com/piskov/yandex-web-developer-diploma-api#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "celebrate": "^11.0.1",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.0.0",
+    "express-winston": "^4.0.2",
+    "helmet": "^3.21.2",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.3",
+    "validator": "^12.2.0",
+    "winston": "^3.2.1"
+  }
+}
