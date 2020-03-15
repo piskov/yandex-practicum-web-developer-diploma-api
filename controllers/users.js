@@ -73,8 +73,8 @@ module.exports.login = (request, response, next) => {
       response
         .cookie('token', token, {
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
-          httpOnly: true,
-          sameSite: true,
+          // httpOnly: true,
+          // sameSite: true,
         })
         .end();
     })
