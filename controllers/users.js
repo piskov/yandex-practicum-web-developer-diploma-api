@@ -70,13 +70,7 @@ module.exports.login = (request, response, next) => {
         { expiresIn: '7d' },
       );
 
-      response
-        .cookie('token', token, {
-          maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
-          // httpOnly: true,
-          // sameSite: true,
-        })
-        .end();
+      return response.json({ token });
     })
     .catch(next);
 };

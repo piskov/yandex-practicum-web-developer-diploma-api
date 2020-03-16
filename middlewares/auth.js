@@ -9,7 +9,14 @@ const { getJwtSecret } = require('../tools/getJwtSecret');
 module.exports = (request, response, next) => {
   const unauthorizedError = new UnauthorizedError(messageConstants.LOGIN_INVALID_EMAIL_OR_PASSWORD);
 
-  const { token } = request.cookies;
+  const authHeader = request.headers.authorization;
+
+  if (!authHeader || authHeader.split(' ').length < 2) {
+    next(unauthorizedError);
+    return;
+  }
+
+  const token = authHeader.split(' ')[1];
   if (!token) {
     next(unauthorizedError);
     return;
