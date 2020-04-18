@@ -9,8 +9,6 @@ Project contains two build configurations:
 
 Dev build defaults to `http://localhost:3000/` and `mongodb://localhost:27017/newsExplorerDb`.
 
-Production API is at: https://api.divulge-uncommon.ru (`84.201.172.80`)
-
 ## API description:
 - `POST /signup` creates new user with `{ email, password, name }`
 - `POST /signin` with `{ email, password }` — return http-only 7-day cookie with JWT
